@@ -2,14 +2,23 @@ import Vue from 'vue'
 import store from './LightboxStore'
 
 Vue.directive('lightbox', {
-    bind (el,binding) {
-        
+//    binding
+    bind (el) {
+        console.log('binding');
         //permet de récupérer l'index
-        let index = store.addImage(el.getAttribute('href'))
+        //lorsqu'on passe de futurama a rio des indx inéxistant sont crée
+        store.addImage(el.getAttribute('href'))
         
         el.addEventListener('click', (e) => {
             e.preventDefault();
-            store.open(index);
+            store.open(el.getAttribute('href'));
         })
+    },
+    unbind(el){
+        console.log('unbinding');
+        store.remove(el.getAttribute('href'))
+    },
+    update(el) {
+        console.log('update');
     }
 })
